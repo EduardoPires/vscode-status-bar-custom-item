@@ -3,7 +3,7 @@
 	"displayName": "Status Bar Customizer",
 	"description": "Personalize your VS Code StatusBar with custom settings.",
 	"icon": "img/icon.png",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"publisher": "EduardoPires",
 	"author": {
 		"name": "Eduardo Pires",

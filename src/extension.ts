@@ -1,7 +1,8 @@
 import * as vscode from "vscode";
 
 let myStatusBarItem: vscode.StatusBarItem;
-let settings = vscode.workspace.getConfiguration('statusbarcustomitem');
+let itemSettings = vscode.workspace.getConfiguration('statusBarCustomItem');
+let colorSettings = vscode.workspace.getConfiguration('statusBarCustomColor');
 
 export function activate(context: vscode.ExtensionContext) {
   myStatusBarItem = vscode.window.createStatusBarItem(
@@ -9,14 +10,45 @@ export function activate(context: vscode.ExtensionContext) {
     10000
   );
   context.subscriptions.push(myStatusBarItem);
-
-  updateStatusBarItem(context);
+  
+  updateStatusBar(context);
 }
 
-function updateStatusBarItem(context: vscode.ExtensionContext): void {
-  let name = settings.get("text") as string;
-  let icon = settings.get("icon") as string;
+function updateStatusBar(context: vscode.ExtensionContext): void {
+  let name = itemSettings.get("text") as string;
+  let icon = itemSettings.get("icon") as string;
+  let tooltip = itemSettings.get("tooltip") as string;
+
+  let primaryBk = colorSettings.get("primaryBkColor") as string;
+  let secondaryBk = colorSettings.get("secondaryBkColor") as string;
+  let foreground = colorSettings.get("foregroundColor") as string;
   
   myStatusBarItem.text = `${icon} ${name}`;
+  myStatusBarItem.tooltip = tooltip;  
   myStatusBarItem.show();
+
+  const workbenchConfiguration = vscode.workspace.getConfiguration('workbench');
+    const currentColorCustomizations: {
+      [index: string]: string;
+    } = workbenchConfiguration.get('colorCustomizations') ?? {};
+
+    const colorCustomizations = { ...currentColorCustomizations };
+
+    if (primaryBk !== undefined) {
+      colorCustomizations['statusBar.background'] = primaryBk;
+    }
+
+    if (secondaryBk !== undefined) {
+      colorCustomizations['statusBar.noFolderBackground'] = secondaryBk;
+      colorCustomizations['statusBar.debuggingBackground'] = secondaryBk;
+    }
+
+    if (foreground !== undefined) {
+      colorCustomizations['statusBar.foreground'] = foreground;
+      colorCustomizations['statusBar.debuggingForeground'] = foreground;
+    }
+
+    if (currentColorCustomizations !== colorCustomizations) {
+      workbenchConfiguration.update('colorCustomizations', colorCustomizations, true);
+    }
 }

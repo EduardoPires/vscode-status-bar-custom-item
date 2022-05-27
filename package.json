@@ -1,9 +1,9 @@
 {
 	"name": "vscode-status-bar-custom-item",
-	"displayName": "Status Bar Custom Item",
-	"description": "Personalize your task bar with a custom item.",
+	"displayName": "Status Bar Customizer",
+	"description": "Personalize your VS Code StatusBar with custom settings.",
 	"icon": "img/icon.png",
-	"version": "0.0.3",
+	"version": "1.0.0",
 	"publisher": "EduardoPires",
 	"author": {
 		"name": "Eduardo Pires",
@@ -26,7 +26,9 @@
 		"status",
 		"custom",
 		"item",
-		"personalize"
+		"personalize",
+		"customizer",
+		"personal"
 	],
 	"activationEvents": [
 		"*"
@@ -58,19 +60,38 @@
 	},
 	"contributes": {
 		"configuration": {
-			"type": "object",
 			"title": "Status Bar Custom Item",
 			"properties": {
-				"statusbarcustomitem.text": {
+				"statusBarCustomItem.text": {
 					"type": "string",
 					"default": "Eduardo Pires",
-					"description": "Custom Item Text (may be your name)"
+					"description": "Custom Item Text (can be your name)"
 				},
-				"statusbarcustomitem.icon": {
+				"statusBarCustomItem.tooltip": {
+					"type": "string",
+					"default": "This Visual Studio Code belongs to Eduardo Pires",
+					"description": "Custom Item Tooltip Text"
+				},
+				"statusBarCustomItem.icon": {
 					"type": "string",
 					"default": "🔥",
 					"description": "Custom Item Icon"
-				}
+				},
+				"statusBarCustomColor.primaryBkColor": {					
+					"type": "string",
+					"default": "#9f00a6",
+					"description": "StatusBar background color" 
+				},
+				"statusBarCustomColor.secondaryBkColor": {
+					"type": "string",
+					"default": "#8a008f",
+					"description": "StatusBar No Folder and Debugging background color" 
+				},
+				"statusBarCustomColor.foregroundColor": {
+					"type": "string",
+					"default": "#ffffff",
+					"description": "Foreground (text) color" 
+				}		
 			}
 		}
 	}
